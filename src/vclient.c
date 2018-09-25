@@ -41,6 +41,7 @@
 #include "client.h"
 #include "vclient.h"
 #include "version.h"
+#include "prompt.h"
 
 // global variables
 int inetversion = 0;
@@ -417,7 +418,7 @@ int main(int argc, char *argv[])
                     continue;
                 }
                 lEptr = lptr + 1;
-                // Noew, we search the end of the variables.
+                // Now, we search the end of the variables.
                 while (isalpha(*lEptr) || isdigit(*lEptr)) {
                     lEptr++;
                 }
@@ -439,7 +440,10 @@ int main(int argc, char *argv[])
                         tPtr = idxPtr[idx - 1];
                         logIT(LOG_INFO, "%s:%s", tPtr->cmd, tPtr->raw);
                         if (tPtr->raw) {
-                            fprintf(ofilePtr, "%s", tPtr->raw);
+                            // if tPtr->raw starts with "ERR:" output only if verbose
+                            if (!((verbose == 0) && strncmp(tPtr->raw, ERR, strlen(ERR)) == 0)) {
+                                fprintf(ofilePtr, "%s", tPtr->raw);
+                            }
                         }
                     } else {
                         logIT(LOG_ERR, "Index of variable $%s > %d", varname, maxIdx - 1);
