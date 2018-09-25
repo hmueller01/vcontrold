@@ -29,6 +29,7 @@
 #include <stdarg.h>
 
 #include "common.h"
+#include "prompt.h"
 
 int syslogger = 0;
 int debug = 0;
@@ -136,7 +137,7 @@ void sendErrMsg(int fd)
     char string[256];
 
     if ((fd >= 0) && (errClass <= 3)) {
-        snprintf(string, sizeof(string), "ERR: %s", errMsg);
+        snprintf(string, sizeof(string), ERR " %s", errMsg);
         write(fd, string, strlen(string));
         errClass = 99; // Thus it's only displayed once
         bzero(errMsg, sizeof(errMsg));

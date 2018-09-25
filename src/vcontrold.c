@@ -576,7 +576,7 @@ int interactive(int socketfd, char *device)
                 }
             } else {
                 bzero(string, sizeof(string));
-                snprintf(string, sizeof(string), "ERR: command %s unknown\n", readPtr);
+                snprintf(string, sizeof(string), ERR " command %s unknown\n", readPtr);
                 Writen(socketfd, string, strlen(string));
             }
         } else if (*readBuf) {
