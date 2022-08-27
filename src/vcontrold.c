@@ -943,7 +943,8 @@ int main(int argc, char *argv[])
 
         while (1) {
             sockfd = listenToSocket(listenfd, makeDaemon);
-            if (signal(SIGPIPE, sigPipeHandler) == SIG_ERR) {
+            //if (signal(SIGPIPE, sigPipeHandler) == SIG_ERR) {
+            if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
                 logIT1(LOG_ERR, "Signal error");
                 exit(1);
             }
